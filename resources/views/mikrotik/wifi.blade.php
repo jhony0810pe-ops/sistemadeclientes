@@ -327,24 +327,15 @@
                             <td>
 
 
-                                @if(($cliente['disabled'] ?? 'yes') === 'yes')
-
-                                    <span class="estado-habilitado">
-
-                                        🟢 HABILITADO
-
-                                    </span>
-
-                                @else
-
-                                    <span class="estado-cortado">
-
-                                        🔴 CORTADO
-
-                                    </span>
-
-                                @endif
-
+@if(($cliente['disabled'] ?? 'yes') === 'no')
+    <span class="estado-habilitado">
+        HABILITADO
+    </span>
+@else
+    <span class="estado-cortado">
+        CORTADO
+    </span>
+@endif
 
                             </td>
 

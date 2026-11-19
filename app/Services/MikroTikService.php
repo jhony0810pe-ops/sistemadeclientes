@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
-use Illuminate\Http\Client\ConnectionException;
 
 class MikroTikService
 {
@@ -13,7 +12,7 @@ class MikroTikService
             preg_replace(
                 '#^https?://#',
                 '',
-                env('MIKROTIK_HOST', '192.168.9.20')
+                env('MIKROTIK_HOST', '10.0.0.1')
             ),
             '/'
         );
@@ -35,17 +34,15 @@ class MikroTikService
         return 'http://' . $this->host() . '/rest/' . ltrim($ruta, '/');
     }
 
-    
+    // OBTENER CLIENTES PPPOE
+    public function obtenerClientes()
+    {
+        return $this->conexion()->get(
+            $this->url('ppp/secret')
+        );
+    }
 
-public function obtenerClientes()
-{
-    return $this->conexion()->get(
-        $this->url('ppp/secret')
-    );
-}
-
-
-
+    // OBTENER CLIENTES ACTIVOS
     public function obtenerActivos()
     {
         return $this->conexion()->get(
@@ -53,6 +50,7 @@ public function obtenerClientes()
         );
     }
 
+    // CREAR CLIENTE PPPOE
     public function crearClientePPPoE($datos)
     {
         return $this->conexion()->post(

@@ -33,7 +33,7 @@ class MikroTikController extends Controller
 
     private function ip(): string
     {
-        $host = env('MIKROTIK_HOST', '192.168.9.20');
+        $host = env('MIKROTIK_HOST', '10.0.0..1');
 
         $host = preg_replace('#^https?://#i', '', $host);
 
@@ -117,34 +117,27 @@ class MikroTikController extends Controller
         return null;
     }
 
-    private function actualizarReglaIp(string $id, string $deshabilitada)
-    {
-        return $this->mikrotik()->patch(
-            $this->urlMikroTik(
-                'ip/firewall/filter/' . rawurlencode($id)
-            ),
-            ['disabled' => $deshabilitada]
-        );
-    }
+private function actualizarReglaIp(string $id, string $deshabilitada)
+{
+    return $this->mikrotik()->patch(
+        $this->urlMikroTik(
+            'ip/firewall/filter/' . $id
+        ),
+        ['disabled' => $deshabilitada]
+    );
+}
 
-    private function actualizarEntradaMorosos(
-        string $id,
-        string $deshabilitada
-    ) {
-        return $this->mikrotik()->patch(
-            $this->urlMikroTik(
-                'ip/firewall/address-list/' . rawurlencode($id)
-            ),
-            ['disabled' => $deshabilitada]
-        );
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | PÁGINA WIFI
-    |--------------------------------------------------------------------------
-    */
-
+private function actualizarEntradaMorosos(
+    string $id,
+    string $deshabilitada
+) {
+    return $this->mikrotik()->patch(
+        $this->urlMikroTik(
+            'ip/firewall/address-list/' . $id
+        ),
+        ['disabled' => $deshabilitada]
+    );
+}
     public function wifi()
     {
         try {
